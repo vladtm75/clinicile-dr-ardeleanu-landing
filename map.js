@@ -4,18 +4,57 @@
   if (!wrap) return;
   const tooltip = wrap.querySelector(".map-tooltip");
   const markers = Array.from(wrap.querySelectorAll(".map-marker"));
+  const chips = Array.from(document.querySelectorAll(".map-chip"));
   let active = null;
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function syncChips(marker) {
+    const id = marker ? marker.getAttribute("data-id") : null;
+    chips.forEach((chip) => {
+      const on = id && chip.getAttribute("data-target") === id;
+      chip.classList.toggle("is-active", !!on);
+      if (on) chip.setAttribute("aria-pressed", "true");
+      else chip.removeAttribute("aria-pressed");
+    });
+  }
 
   function placeTooltip(marker) {
     const name = marker.getAttribute("data-name") || "";
     const detail = marker.getAttribute("data-detail") || "";
-    tooltip.innerHTML = "<strong>" + name + "</strong><span>" + detail + "</span>";
+    const image = marker.getAttribute("data-image") || "";
+    const status = marker.getAttribute("data-status") || "";
+    const statusClass =
+      status === "pipeline" ? "map-tooltip__status--dev" : "map-tooltip__status--open";
+
+    let html = "";
+    if (image) {
+      html +=
+        '<img class="map-tooltip__thumb" src="' +
+        escapeHtml(image) +
+        '" alt="" width="120" height="80" />';
+    }
+    html += '<div class="map-tooltip__body">';
+    html += "<strong>" + escapeHtml(name) + "</strong>";
+    html +=
+      '<span class="map-tooltip__status ' +
+      statusClass +
+      '">' +
+      escapeHtml(detail) +
+      "</span>";
+    html += "</div>";
+    tooltip.innerHTML = html;
     tooltip.hidden = false;
 
     const wrapRect = wrap.getBoundingClientRect();
     const svg = wrap.querySelector(".romania-map");
     const pt = svg.createSVGPoint();
-    // marker is a <g> translated; use its CTM
     const ctm = marker.getScreenCTM();
     if (!ctm) return;
     pt.x = 0;
@@ -27,7 +66,6 @@
     tooltip.style.left = left + "px";
     tooltip.style.top = top + "px";
 
-    // keep inside wrap
     requestAnimationFrame(() => {
       const tr = tooltip.getBoundingClientRect();
       let dx = 0;
@@ -47,12 +85,18 @@
     active = marker;
     marker.classList.add("is-active");
     placeTooltip(marker);
+    syncChips(marker);
   }
 
   function hide() {
     if (active) active.classList.remove("is-active");
     active = null;
     tooltip.hidden = true;
+    syncChips(null);
+  }
+
+  function markerById(id) {
+    return markers.find((m) => m.getAttribute("data-id") === id) || null;
   }
 
   markers.forEach((marker) => {
@@ -71,6 +115,41 @@
       if (e.key === "Escape") {
         hide();
         marker.blur();
+      }
+    });
+  });
+
+  chips.forEach((chip) => {
+    chip.addEventListener("mouseenter", () => {
+      const m = markerById(chip.getAttribute("data-target"));
+      if (m) show(m);
+    });
+    chip.addEventListener("mouseleave", () => {
+      if (document.activeElement && document.activeElement.classList.contains("map-marker")) {
+        return;
+      }
+      if (document.activeElement === chip) return;
+      hide();
+    });
+    chip.addEventListener("focus", () => {
+      const m = markerById(chip.getAttribute("data-target"));
+      if (m) show(m);
+    });
+    chip.addEventListener("blur", () => hide());
+    chip.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const m = markerById(chip.getAttribute("data-target"));
+      if (!m) return;
+      if (active === m && !tooltip.hidden) hide();
+      else {
+        show(m);
+        m.focus({ preventScroll: true });
+      }
+    });
+    chip.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        hide();
+        chip.blur();
       }
     });
   });
