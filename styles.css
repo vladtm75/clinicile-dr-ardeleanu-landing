@@ -654,9 +654,10 @@ h1, h2, h3 {
   font-size: 0.98rem;
   color: var(--burgundy);
   font-weight: 500;
-  padding-top: 0.75rem;
-  border-top: 2px solid var(--burgundy);
-  width: min(100%, 520px);
+  padding-top: 0.35rem;
+  border-top: none;
+  width: auto;
+  max-width: 100%;
 }
 
 .pin {
