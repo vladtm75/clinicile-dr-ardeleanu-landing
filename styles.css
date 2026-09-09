@@ -282,6 +282,14 @@ h1, h2, h3 {
   margin: 0;
 }
 
+.hero-slogans {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+}
+
 .hero-badge {
   display: inline-block;
   margin: 0;
@@ -962,6 +970,15 @@ a.project-card--link:hover {
   filter: none;
 }
 
+.closing-slogans {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  text-align: center;
+}
+
 .closing h2 {
   font-family: var(--font-serif);
   font-size: clamp(2rem, 4vw, 2.8rem);
@@ -1342,10 +1359,13 @@ a.project-card--link:hover {
     max-width: 100%;
   }
 
-  .closing-pill,
   .closing-site,
   .closing-download {
     width: 100%;
+  }
+
+  .closing-pill {
+    max-width: 100%;
   }
 
   .origin-stat {
