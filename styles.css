@@ -131,7 +131,8 @@ h1, h2, h3 {
 .logo-link img {
   height: 44px;
   width: auto;
-  max-width: min(244px, 55vw);
+  max-width: min(280px, 62vw);
+  object-fit: contain;
 }
 
 .site-nav {
@@ -247,8 +248,11 @@ h1, h2, h3 {
 }
 
 .hero-logo {
-  width: 140px;
+  width: min(280px, 72vw);
+  max-width: 100%;
   height: auto;
+  aspect-ratio: 1000 / 179;
+  object-fit: contain;
   margin-bottom: 0.5rem;
 }
 
@@ -379,6 +383,21 @@ h1, h2, h3 {
 
 .clinic-grid--4 {
   grid-template-columns: repeat(4, 1fr);
+}
+
+a.clinic-card {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease;
+}
+
+a.clinic-card:hover {
+  transform: translateY(-2px);
+}
+
+a.clinic-card:hover .clinic-label {
+  background: var(--burgundy);
+  color: var(--white);
 }
 
 .clinic-card {
@@ -562,6 +581,10 @@ h1, h2, h3 {
 }
 
 /* On-map photo callout card */
+.map-tooltip[hidden] {
+  display: none !important;
+}
+
 .map-tooltip {
   position: absolute;
   z-index: 5;
@@ -642,6 +665,16 @@ h1, h2, h3 {
   color: var(--burgundy-deep);
 }
 
+.map-tooltip__link {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--burgundy);
+  text-decoration: underline;
+  pointer-events: auto;
+}
+
 .map-tooltip__status--dev {
   color: #8a6d28;
 }
@@ -716,47 +749,30 @@ h1, h2, h3 {
   background: var(--bg);
 }
 
-.team-metric {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto 2rem;
-  width: fit-content;
-  padding: 1rem 2rem;
-  background: var(--card);
-  border-radius: var(--radius);
-  border: 1px solid var(--tan-soft);
-}
-
-.team-metric-num {
-  font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 700;
-  color: var(--burgundy);
-  line-height: 1;
-}
-
-.team-metric-label {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
 .team-photo {
   margin: 0 auto;
-  max-width: 960px;
+  max-width: min(1180px, 100%);
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--white);
   box-shadow: var(--shadow);
 }
 
+.team-photo a {
+  display: block;
+  line-height: 0;
+}
+
 .team-photo img {
   width: 100%;
-  object-fit: contain;
+  min-height: 280px;
+  object-fit: cover;
   background: var(--white);
+  transition: transform 0.25s ease;
+}
+
+.team-photo a:hover img {
+  transform: scale(1.015);
 }
 
 .team-caption {
@@ -868,8 +884,10 @@ h1, h2, h3 {
 
 .closing-logo {
   margin: 0 auto 1.25rem;
-  width: 120px;
+  width: min(220px, 70vw);
   height: auto;
+  aspect-ratio: 1000 / 179;
+  object-fit: contain;
 }
 
 .closing h2 {

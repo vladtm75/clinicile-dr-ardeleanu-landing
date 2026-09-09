@@ -86,6 +86,7 @@
     const detail = marker.getAttribute("data-detail") || "";
     const image = marker.getAttribute("data-image") || "";
     const status = marker.getAttribute("data-status") || "";
+    const url = marker.getAttribute("data-url") || "";
     const statusClass =
       status === "pipeline" ? "map-tooltip__status--dev" : "map-tooltip__status--open";
 
@@ -104,9 +105,16 @@
       '">' +
       escapeHtml(detail) +
       "</span>";
+    if (url) {
+      html +=
+        '<a class="map-tooltip__link" href="' +
+        escapeHtml(url) +
+        '" target="_blank" rel="noopener noreferrer">Servicii și prețuri</a>';
+    }
     html += "</div>";
     tooltip.innerHTML = html;
     tooltip.hidden = false;
+    tooltip.style.pointerEvents = url ? "auto" : "none";
     tooltip.classList.toggle("map-tooltip--dev", status === "pipeline");
 
     const wrapRect = wrap.getBoundingClientRect();
@@ -147,6 +155,7 @@
     if (active) active.classList.remove("is-active");
     active = null;
     tooltip.hidden = true;
+    tooltip.style.pointerEvents = "none";
     tooltip.classList.remove("map-tooltip--dev");
   }
 
