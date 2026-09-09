@@ -138,11 +138,13 @@ h1, h2, h3 {
 }
 
 .logo-link img {
-  height: 44px;
+  height: 48px;
   width: auto;
-  max-width: min(280px, 62vw);
+  max-width: min(300px, 64vw);
   aspect-ratio: 1809 / 493;
   object-fit: contain;
+  object-position: left center;
+  filter: none;
 }
 
 .site-nav {
@@ -265,11 +267,13 @@ h1, h2, h3 {
 }
 
 .hero-logo {
-  width: min(320px, 78vw);
+  width: min(380px, 82vw);
   max-width: 100%;
   height: auto;
   aspect-ratio: 1809 / 493;
   object-fit: contain;
+  object-position: center;
+  filter: none;
   margin-bottom: 0.5rem;
 }
 
@@ -944,15 +948,18 @@ a.project-card--link:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.15rem;
+  gap: 1.75rem;
 }
 
 .closing-logo {
   margin: 0 auto;
-  width: min(280px, 72vw);
+  width: min(400px, 88vw);
+  max-width: 100%;
   height: auto;
   aspect-ratio: 1809 / 493;
   object-fit: contain;
+  object-position: center;
+  filter: none;
 }
 
 .closing h2 {
@@ -962,17 +969,57 @@ a.project-card--link:hover {
   margin: 0;
 }
 
-.closing .hero-badge,
-.closing-badge {
-  margin: 0.35rem 0 0.5rem;
-}
-
 .closing-ctas {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 1rem;
   justify-content: center;
-  margin-top: 0.75rem;
+  margin-top: 0.15rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.closing-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0.75rem 1.6rem;
+  min-height: 44px;
+  background: var(--burgundy);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.01em;
+  text-align: center;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.closing-site {
+  width: fit-content;
+  min-width: min(300px, 100%);
+  padding-inline: 2rem;
+}
+
+.closing-email {
+  color: var(--burgundy);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.82;
+  margin-top: 0.15rem;
+}
+
+.closing-email:hover {
+  opacity: 1;
+  color: var(--burgundy-dark);
 }
 
 /* Footer */
@@ -1040,7 +1087,7 @@ a.project-card--link:hover {
   }
 
   .hero-logo {
-    width: min(280px, 70vw);
+    width: min(340px, 78vw);
   }
 
   .section h2 {
@@ -1065,8 +1112,8 @@ a.project-card--link:hover {
   }
 
   .logo-link img {
-    height: 36px;
-    max-width: min(200px, 52vw);
+    height: 40px;
+    max-width: min(220px, 56vw);
   }
 
   .site-nav {
@@ -1172,7 +1219,11 @@ a.project-card--link:hover {
   }
 
   .closing-logo {
-    width: min(220px, 68vw);
+    width: min(340px, 86vw);
+  }
+
+  .closing-inner {
+    gap: 1.4rem;
   }
 
   .closing-ctas {
@@ -1180,8 +1231,14 @@ a.project-card--link:hover {
     max-width: 360px;
   }
 
-  .closing-ctas .btn {
-    flex: 1 1 auto;
+  .closing-pill {
+    font-size: 0.95rem;
+    padding: 0.7rem 1.35rem;
+  }
+
+  .closing-site {
+    width: 100%;
+    min-width: 0;
   }
 
   .footer-inner {
@@ -1242,12 +1299,16 @@ a.project-card--link:hover {
   }
 
   .logo-link img {
-    height: 32px;
-    max-width: min(168px, 48vw);
+    height: 36px;
+    max-width: min(190px, 54vw);
   }
 
   .hero-logo {
-    width: min(240px, 78vw);
+    width: min(300px, 88vw);
+  }
+
+  .closing-logo {
+    width: min(300px, 90vw);
   }
 
   .hero-circle {
@@ -1265,7 +1326,8 @@ a.project-card--link:hover {
     max-width: 100%;
   }
 
-  .closing-ctas .btn {
+  .closing-pill,
+  .closing-site {
     width: 100%;
   }
 
