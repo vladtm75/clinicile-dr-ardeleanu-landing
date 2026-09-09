@@ -1,10 +1,15 @@
-/* Interactive Romania network map — public locations only */
+/* Interactive Romania network map — on-map photo badges + callout cards */
 (function () {
   const wrap = document.querySelector(".map-interactive");
   if (!wrap) return;
   const tooltip = wrap.querySelector(".map-tooltip");
+  const svg = wrap.querySelector(".romania-map");
   const markers = Array.from(wrap.querySelectorAll(".map-marker"));
-  const chips = Array.from(document.querySelectorAll(".map-chip"));
+  if (!svg || !tooltip || !markers.length) return;
+
+  const NS = "http://www.w3.org/2000/svg";
+  const XLINK = "http://www.w3.org/1999/xlink";
+  const BADGE_R = 15;
   let active = null;
 
   function escapeHtml(str) {
@@ -15,14 +20,65 @@
       .replace(/"/g, "&quot;");
   }
 
-  function syncChips(marker) {
-    const id = marker ? marker.getAttribute("data-id") : null;
-    chips.forEach((chip) => {
-      const on = id && chip.getAttribute("data-target") === id;
-      chip.classList.toggle("is-active", !!on);
-      if (on) chip.setAttribute("aria-pressed", "true");
-      else chip.removeAttribute("aria-pressed");
-    });
+  function ensureDefs() {
+    let defs = svg.querySelector("defs.map-defs");
+    if (defs) return defs;
+    defs = document.createElementNS(NS, "defs");
+    defs.classList.add("map-defs");
+    const clip = document.createElementNS(NS, "clipPath");
+    clip.setAttribute("id", "map-badge-clip");
+    const circle = document.createElementNS(NS, "circle");
+    circle.setAttribute("cx", "0");
+    circle.setAttribute("cy", "0");
+    circle.setAttribute("r", String(BADGE_R));
+    clip.appendChild(circle);
+    defs.appendChild(clip);
+    svg.insertBefore(defs, svg.firstChild);
+    return defs;
+  }
+
+  function attachBadge(marker) {
+    const image = marker.getAttribute("data-image");
+    if (!image || marker.querySelector(".map-marker__photo")) return;
+
+    const status = marker.getAttribute("data-status") || "";
+    const photo = document.createElementNS(NS, "g");
+    photo.classList.add("map-marker__photo");
+    if (status === "pipeline") photo.classList.add("map-marker__photo--dev");
+
+    const ring = document.createElementNS(NS, "circle");
+    ring.classList.add("map-marker__badge-ring");
+    ring.setAttribute("r", String(BADGE_R + 1.5));
+    ring.setAttribute("cx", "0");
+    ring.setAttribute("cy", "0");
+
+    const img = document.createElementNS(NS, "image");
+    img.classList.add("map-marker__badge");
+    img.setAttribute("href", image);
+    img.setAttributeNS(XLINK, "href", image);
+    img.setAttribute("x", String(-BADGE_R));
+    img.setAttribute("y", String(-BADGE_R));
+    img.setAttribute("width", String(BADGE_R * 2));
+    img.setAttribute("height", String(BADGE_R * 2));
+    img.setAttribute("preserveAspectRatio", "xMidYMid slice");
+    img.setAttribute("clip-path", "url(#map-badge-clip)");
+    img.setAttribute("pointer-events", "none");
+
+    photo.appendChild(ring);
+    photo.appendChild(img);
+
+    const hit = marker.querySelector(".map-marker__hit");
+    if (hit) {
+      hit.setAttribute("r", "22");
+      marker.insertBefore(photo, hit.nextSibling);
+    } else {
+      marker.insertBefore(photo, marker.firstChild);
+    }
+
+    const dot = marker.querySelector(".map-marker__dot");
+    const diamond = marker.querySelector(".map-marker__diamond");
+    if (dot) dot.setAttribute("visibility", "hidden");
+    if (diamond) diamond.setAttribute("visibility", "hidden");
   }
 
   function placeTooltip(marker) {
@@ -36,9 +92,9 @@
     let html = "";
     if (image) {
       html +=
-        '<img class="map-tooltip__thumb" src="' +
+        '<img class="map-tooltip__photo" src="' +
         escapeHtml(image) +
-        '" alt="" width="120" height="80" />';
+        '" alt="" width="160" height="110" loading="lazy" />';
     }
     html += '<div class="map-tooltip__body">';
     html += "<strong>" + escapeHtml(name) + "</strong>";
@@ -51,14 +107,14 @@
     html += "</div>";
     tooltip.innerHTML = html;
     tooltip.hidden = false;
+    tooltip.classList.toggle("map-tooltip--dev", status === "pipeline");
 
     const wrapRect = wrap.getBoundingClientRect();
-    const svg = wrap.querySelector(".romania-map");
     const pt = svg.createSVGPoint();
     const ctm = marker.getScreenCTM();
     if (!ctm) return;
     pt.x = 0;
-    pt.y = -16;
+    pt.y = -(BADGE_R + 4);
     const screen = pt.matrixTransform(ctm);
     const left = screen.x - wrapRect.left;
     const top = screen.y - wrapRect.top;
@@ -85,19 +141,17 @@
     active = marker;
     marker.classList.add("is-active");
     placeTooltip(marker);
-    syncChips(marker);
   }
 
   function hide() {
     if (active) active.classList.remove("is-active");
     active = null;
     tooltip.hidden = true;
-    syncChips(null);
+    tooltip.classList.remove("map-tooltip--dev");
   }
 
-  function markerById(id) {
-    return markers.find((m) => m.getAttribute("data-id") === id) || null;
-  }
+  ensureDefs();
+  markers.forEach(attachBadge);
 
   markers.forEach((marker) => {
     marker.addEventListener("mouseenter", () => show(marker));
@@ -115,41 +169,6 @@
       if (e.key === "Escape") {
         hide();
         marker.blur();
-      }
-    });
-  });
-
-  chips.forEach((chip) => {
-    chip.addEventListener("mouseenter", () => {
-      const m = markerById(chip.getAttribute("data-target"));
-      if (m) show(m);
-    });
-    chip.addEventListener("mouseleave", () => {
-      if (document.activeElement && document.activeElement.classList.contains("map-marker")) {
-        return;
-      }
-      if (document.activeElement === chip) return;
-      hide();
-    });
-    chip.addEventListener("focus", () => {
-      const m = markerById(chip.getAttribute("data-target"));
-      if (m) show(m);
-    });
-    chip.addEventListener("blur", () => hide());
-    chip.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const m = markerById(chip.getAttribute("data-target"));
-      if (!m) return;
-      if (active === m && !tooltip.hidden) hide();
-      else {
-        show(m);
-        m.focus({ preventScroll: true });
-      }
-    });
-    chip.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        hide();
-        chip.blur();
       }
     });
   });
