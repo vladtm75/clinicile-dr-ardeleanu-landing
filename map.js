@@ -132,11 +132,18 @@
 
     requestAnimationFrame(() => {
       const tr = tooltip.getBoundingClientRect();
+      const pad = 8;
+      const viewLeft = Math.max(wrapRect.left, pad);
+      const viewRight = Math.min(wrapRect.right, window.innerWidth - pad);
+      const viewTop = Math.max(wrapRect.top, pad);
       let dx = 0;
       let dy = 0;
-      if (tr.left < wrapRect.left + 8) dx = wrapRect.left + 8 - tr.left;
-      if (tr.right > wrapRect.right - 8) dx = wrapRect.right - 8 - tr.right;
-      if (tr.top < wrapRect.top + 8) dy = wrapRect.top + 8 - tr.top;
+      if (tr.left < viewLeft) dx = viewLeft - tr.left;
+      if (tr.right > viewRight) dx = viewRight - tr.right;
+      if (tr.top < viewTop) dy = viewTop - tr.top;
+      if (tr.bottom > window.innerHeight - pad) {
+        dy = Math.min(dy, window.innerHeight - pad - tr.bottom);
+      }
       if (dx || dy) {
         tooltip.style.left = left + dx + "px";
         tooltip.style.top = top + dy + "px";

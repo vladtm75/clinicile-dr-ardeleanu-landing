@@ -2,13 +2,13 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="Clinicile Dr. Ardeleanu — Clinica familiei tale! Excelență la prețuri accesibile. Rețea națională de clinici dentare." />
   <title>Clinicile Dr. Ardeleanu — Clinica familiei tale!</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <a class="skip-link" href="#main">Sari la conținut</a>
@@ -348,16 +348,23 @@
   <script>
     const toggle = document.querySelector('.nav-toggle');
     const nav = document.getElementById('site-nav');
+    function setNavOpen(open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
+      nav.classList.toggle('is-open', open);
+      document.body.classList.toggle('nav-open', open);
+    }
     toggle.addEventListener('click', () => {
-      const open = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!open));
-      nav.classList.toggle('is-open', !open);
+      setNavOpen(toggle.getAttribute('aria-expanded') !== 'true');
     });
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      toggle.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('is-open');
-    }));
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setNavOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setNavOpen(false);
+    });
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 721px)').matches) setNavOpen(false);
+    });
   </script>
-  <script src="map.js" defer></script>
+  <script src="map.js?v=4" defer></script>
 </body>
 </html>
