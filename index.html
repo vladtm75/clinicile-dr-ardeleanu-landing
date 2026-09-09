@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
   <a class="skip-link" href="#main">Sari la conținut</a>
@@ -16,7 +16,7 @@
   <header class="site-header" id="top">
     <div class="header-inner">
       <a class="logo-link" href="#top" aria-label="Clinicile Dr. Ardeleanu — acasă">
-        <img src="assets/logo-header-white.png?v=2" alt="Dr. Ardeleanu Dental Clinics" width="500" height="90" />
+        <img src="assets/logo-dr-ardeleanu-white.svg?v=3" alt="Dr. Ardeleanu Dental Clinics" width="181" height="49" />
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Deschide meniul">
         <span></span><span></span><span></span>
@@ -37,7 +37,7 @@
     <!-- 1. Hero -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <img class="hero-logo" src="assets/logo-stacked.png?v=2" alt="Dr. Ardeleanu Dental Clinics" width="420" height="75" />
+        <img class="hero-logo" src="assets/logo-dr-ardeleanu.svg?v=3" alt="Dr. Ardeleanu Dental Clinics" width="420" height="114" />
         <h1 id="hero-title">Clinica familiei tale!</h1>
         <p class="hero-badge">Excelență la prețuri accesibile</p>
       </div>
@@ -53,12 +53,12 @@
       <div class="container">
         <h2 id="origine-title">2017 — De unde am pornit</h2>
         <div class="origin-grid">
-          <figure class="photo-card">
+          <a class="photo-card" href="https://clinicileardeleanu.ro/clinici/clinica-oltenita/" target="_blank" rel="noopener noreferrer" aria-label="Clinica Oltenița — servicii și prețuri">
             <img src="assets/origin-exterior.jpg" alt="Exteriorul clinicii din Oltenița" width="800" height="600" loading="lazy" />
-          </figure>
-          <figure class="photo-card">
+          </a>
+          <a class="photo-card" href="https://clinicileardeleanu.ro/clinici/clinica-oltenita/" target="_blank" rel="noopener noreferrer" aria-label="Clinica Oltenița — cabinet pediatric">
             <img src="assets/origin-interior.jpg" alt="Cabinet pediatric — medic și copil" width="800" height="600" loading="lazy" />
-          </figure>
+          </a>
         </div>
         <p class="origin-stat"><span class="accent-bar" aria-hidden="true"></span>2 unituri, 1 medic, Oltenița</p>
       </div>
@@ -299,15 +299,17 @@
       <div class="container">
         <h2 id="proiecte-title">Proiecte în dezvoltare</h2>
         <ul class="project-grid">
-          <li class="project-card">
-            <div class="project-icon" aria-hidden="true">
-              <svg viewBox="0 0 64 64" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="14" width="48" height="36" rx="4" stroke="currentColor" stroke-width="2.5"/>
-                <path d="M8 24h48M22 14v-4h20v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="32" cy="38" r="6" stroke="currentColor" stroke-width="2.5"/>
-              </svg>
-            </div>
-            <h3>Centrul de training<br />Dr. Ardeleanu</h3>
+          <li>
+            <a class="project-card project-card--link" href="https://edu.clinicileardeleanu.ro" target="_blank" rel="noopener noreferrer" aria-label="Centrul de training Dr. Ardeleanu">
+              <div class="project-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="8" y="14" width="48" height="36" rx="4" stroke="currentColor" stroke-width="2.5"/>
+                  <path d="M8 24h48M22 14v-4h20v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle cx="32" cy="38" r="6" stroke="currentColor" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <h3>Centrul de training<br />Dr. Ardeleanu</h3>
+            </a>
           </li>
           <li class="project-card">
             <div class="project-icon" aria-hidden="true">
@@ -324,10 +326,10 @@
 
     <!-- 10. Closing CTA -->
     <section class="section closing" id="contact" aria-labelledby="closing-title">
-      <div class="container narrow">
-        <img class="closing-logo" src="assets/logo-stacked.png?v=2" alt="" width="320" height="57" />
+      <div class="container narrow closing-inner">
+        <img class="closing-logo" src="assets/logo-dr-ardeleanu.svg?v=3" alt="Dr. Ardeleanu Dental Clinics" width="320" height="87" />
         <h2 id="closing-title">Clinica familiei tale!</h2>
-        <p class="hero-badge">Excelență la prețuri accesibile</p>
+        <p class="hero-badge closing-badge">Excelență la prețuri accesibile</p>
         <div class="closing-ctas">
           <a class="btn btn-primary" href="https://clinicileardeleanu.ro" target="_blank" rel="noopener noreferrer">clinicileardeleanu.ro</a>
           <a class="btn btn-outline" href="mailto:programari@ardeleanu.ro">programari@ardeleanu.ro</a>
@@ -338,13 +340,12 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>&copy; <span id="y"></span> Clinicile Dr. Ardeleanu</p>
+      <p>&copy; 2026 Clinicile Dr. Ardeleanu</p>
       <p><a href="https://clinicileardeleanu.ro" target="_blank" rel="noopener noreferrer">clinicileardeleanu.ro</a></p>
     </div>
   </footer>
 
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
     const toggle = document.querySelector('.nav-toggle');
     const nav = document.getElementById('site-nav');
     toggle.addEventListener('click', () => {

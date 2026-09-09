@@ -1,7 +1,7 @@
 /* Clinicile Dr. Ardeleanu — company profile landing */
 
 :root {
-  --burgundy: #7a1f24;
+  --burgundy: #7b1c16;
   --burgundy-deep: #801515;
   --burgundy-dark: #5c1218;
   --bg: #f9f7f2;
@@ -132,6 +132,7 @@ h1, h2, h3 {
   height: 44px;
   width: auto;
   max-width: min(280px, 62vw);
+  aspect-ratio: 1809 / 493;
   object-fit: contain;
 }
 
@@ -248,10 +249,10 @@ h1, h2, h3 {
 }
 
 .hero-logo {
-  width: min(280px, 72vw);
+  width: min(320px, 78vw);
   max-width: 100%;
   height: auto;
-  aspect-ratio: 1000 / 179;
+  aspect-ratio: 1809 / 493;
   object-fit: contain;
   margin-bottom: 0.5rem;
 }
@@ -340,12 +341,22 @@ h1, h2, h3 {
   overflow: hidden;
   box-shadow: var(--shadow);
   background: var(--card);
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+a.photo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(122, 31, 36, 0.14);
 }
 
 .photo-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  display: block;
 }
 
 .origin-stat {
@@ -362,7 +373,7 @@ h1, h2, h3 {
 .accent-bar {
   width: 4px;
   height: 1.6em;
-  background: var(--tan);
+  background: var(--burgundy);
   border-radius: 2px;
   flex-shrink: 0;
 }
@@ -864,6 +875,20 @@ a.clinic-card:hover .clinic-label {
   text-align: center;
   border: 1px solid var(--tan-soft);
   box-shadow: var(--shadow);
+  display: block;
+  height: 100%;
+}
+
+a.project-card--link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+a.project-card--link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(122, 31, 36, 0.14);
+  color: inherit;
 }
 
 .project-icon {
@@ -874,29 +899,42 @@ a.clinic-card:hover .clinic-label {
 .project-card h3 {
   font-size: 1.35rem;
   margin: 0;
+  color: var(--burgundy);
 }
 
 /* Closing */
 .closing {
   background: var(--bg);
-  padding-bottom: 5rem;
+  padding-top: 5rem;
+  padding-bottom: 4.5rem;
+  text-align: center;
+}
+
+.closing-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.15rem;
 }
 
 .closing-logo {
-  margin: 0 auto 1.25rem;
-  width: min(220px, 70vw);
+  margin: 0 auto;
+  width: min(280px, 72vw);
   height: auto;
-  aspect-ratio: 1000 / 179;
+  aspect-ratio: 1809 / 493;
   object-fit: contain;
 }
 
 .closing h2 {
+  font-family: var(--font-serif);
   font-size: clamp(2rem, 4vw, 2.8rem);
-  margin-bottom: 1rem;
+  color: var(--burgundy);
+  margin: 0;
 }
 
-.closing .hero-badge {
-  margin-bottom: 2rem;
+.closing .hero-badge,
+.closing-badge {
+  margin: 0.35rem 0 0.5rem;
 }
 
 .closing-ctas {
@@ -904,14 +942,16 @@ a.clinic-card:hover .clinic-label {
   flex-wrap: wrap;
   gap: 0.85rem;
   justify-content: center;
+  margin-top: 0.75rem;
 }
 
 /* Footer */
 .site-footer {
-  background: var(--burgundy-dark);
-  color: rgba(255, 255, 255, 0.85);
-  padding: 1.5rem 0;
-  font-size: 0.9rem;
+  background: var(--burgundy);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 1.1rem 0;
+  font-size: 0.88rem;
+  font-family: var(--font-sans);
 }
 
 .footer-inner {
@@ -924,6 +964,12 @@ a.clinic-card:hover .clinic-label {
 
 .site-footer a {
   color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.site-footer a:hover {
+  opacity: 0.9;
 }
 
 .site-footer p {
