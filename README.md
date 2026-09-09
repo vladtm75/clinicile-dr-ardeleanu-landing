@@ -6,6 +6,7 @@ Single-page company profile for **Clinicile Dr. Ardeleanu** (Romanian), adapted 
 
 - `index.html` — semantic, accessible, responsive landing page
 - `styles.css` — brand styles (burgundy / off-white / beige)
+- `map.js` — interactive SVG network map (hover/focus/touch tooltips)
 - `assets/` — optimized logos and photography
 
 ## Sections
@@ -14,7 +15,7 @@ Single-page company profile for **Clinicile Dr. Ardeleanu** (Romanian), adapted 
 2. 2017 origin (Oltenița)
 3. 8 operational clinics (2026)
 4. 4 clinics under renovation
-5. National expansion map
+5. National expansion map (interactive SVG — open + in-development clinics only)
 6. Medical team growth (80+ / 50 milestone)
 7. Patients & visits 2025
 8. Key figures
