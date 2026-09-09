@@ -131,6 +131,7 @@ h1, h2, h3 {
 .logo-link img {
   height: 44px;
   width: auto;
+  max-width: min(244px, 55vw);
 }
 
 .site-nav {
@@ -247,6 +248,7 @@ h1, h2, h3 {
 
 .hero-logo {
   width: 140px;
+  height: auto;
   margin-bottom: 0.5rem;
 }
 
@@ -639,6 +641,7 @@ h1, h2, h3 {
 .closing-logo {
   margin: 0 auto 1.25rem;
   width: 120px;
+  height: auto;
 }
 
 .closing h2 {
